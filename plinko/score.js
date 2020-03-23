@@ -12,20 +12,23 @@ function runAnalysis() {
   // Write code here to analyze stuff
   //byclicking analyze, runs splitDataSet function for testSet and trainingSet
   const testSetSize = 100;
-  const [testSet, trainingSet] = splitDataSet(outputs, testSetSize);
+  const k = 10;
 
   //ranging to value of k variable
-  _.range(1, 20).forEach(k => {
+  _.range(0, 3).forEach(feature => {
+    const data = _.map(outputs, row => [row[feature], _.last(row)]);
+    const [testSet, trainingSet] = splitDataSet(minMax(data, 1), testSetSize);
     //rewriting the forloop to create the predition index
     const accuracy = _.chain(testSet)
       .filter(
-        testPoint => knn(trainingSet, _.initial(testPoint), k) === testPoint[3]
+        testPoint =>
+          knn(trainingSet, _.initial(testPoint), k) === _.last(testPoint)
       )
       .size()
       .divide(testSetSize)
       .value();
 
-    console.log('for k of', k, 'accuracy is:', accuracy);
+    console.log('for feature of', feature, 'accuracy is:', accuracy);
   });
 }
 
@@ -37,7 +40,7 @@ function knn(data, point, k) {
     _.chain(data)
       //mapping mirrored results
       .map(row => {
-        return [distance(_.initial(point), point), _.last(row)];
+        return [distance(_.initial(row), point), _.last(row)];
       })
       //sorting mapped mirrored results
       .sortBy(row => row[0])
@@ -86,4 +89,22 @@ function splitDataSet(data, testCount) {
   const trainingSet = _.slice(shuffled, testCount);
 
   return [testSet, trainingSet];
+}
+
+//normalizing or scaling data set to give data equal weight for accuracy of the predictions
+
+function minMax(data, featureCount) {
+  const clonedData = _.cloneDeep(data);
+
+  for (let i = 0; i < featureCount; i++) {
+    const column = clonedData.map(row => row[i]);
+
+    const min = _.min(column);
+    const max = _.max(column);
+
+    for (let j = 0; j < clonedData.length; j++) {
+      clonedData[j][i] = (clonedData[j][i] - min) / (max - min);
+    }
+  }
+  return clonedData;
 }
