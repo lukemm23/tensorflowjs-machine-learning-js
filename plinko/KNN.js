@@ -77,3 +77,19 @@ const point = [350, 0.5, 16, 4];
 _.initial(point);
 //getting only to last value of array
 _.last(point);
+
+// ********* machine learning fundamental operations *********
+// 1. feature vs labels
+// feature is the test subject, label is the end prediction
+// where in a array of arrays, first few values are the test features,
+// last value is label or prediction
+
+// 2. test vs. training sets of data
+// refer to the algorithm and inserting test data and training data
+
+// 3. feature normalization vs standardization.
+// scaling data into appropriate weight in the prediction process
+// refer to min/max algorithm
+
+// 4. feature selection, test and revise feature selection to maximize
+// prediction accuracy
