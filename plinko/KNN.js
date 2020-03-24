@@ -93,3 +93,15 @@ _.last(point);
 
 // 4. feature selection, test and revise feature selection to maximize
 // prediction accuracy
+
+// ******** tensor flow terminologies ******** //
+// 1. tensors - the array of array of data
+// 2. dimensions - the dimension of tensor data
+//    single array - 1 dimension
+//    single nested array - 2 dimensions
+//    double nested array - 3 dimensions
+// 3. shape - the shape of a tensor
+//    [1] - 1 dimensional with length of 1
+//    [2,3] - 2 dimensional with length of 3
+//    [3,4,5] - 3 dimensional with array length of 5 nested inside array length of 4
+//    way of counting shape for 2 dimensional tensor shapes - [#row, #column]
